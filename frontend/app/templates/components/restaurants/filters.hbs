@@ -1,0 +1,154 @@
+<div>
+  <div class="row">
+    <div class="col-xs-12">
+      <form class="search-box restaurant-filter-box">
+        <label for="search">
+          {{fa-icon "search"}}
+        </label>
+        {{input
+          id="search"
+          class="search-textbox restaurant_search_textbox"
+          placeholder="Search for a restaurant..."
+          value=name
+        }}
+        <button
+          type="button"
+          class="show-popup-button"
+          {{action "onShowSortDropdown"}}
+        >
+          Sort by
+          {{fa-icon "chevron-down"}}
+        </button>
+        <button
+          type="button"
+          class="show-popup-button"
+          {{action "onShowFiltersDropdown"}}
+        >
+          Filter by
+          {{fa-icon "chevron-down"}}
+        </button>
+        {{#if isFiltersDropdownShown}}
+          <div class="restaurant-filters-dropdown">
+            <div class="filter-popup-arrow"></div>
+            <div class="filter-popup-content">
+              <div class="filter-popup-header">
+                <div class="filter-popup-header-price">
+                  <h5>
+                    Price
+                  </h5>
+                  {{fa-icon "times" click=(action "onRemovePrice")}}
+                  {{ui/price-range
+                    isEditable=true
+                    priceRange=price
+                    onPriceChange=(action "onPriceChange")
+                    class="restaurant-tile-pricernage"
+                  }}
+                </div>
+                <div class="filter-popup-header-rating">
+                  <h5>
+                    Rating
+                  </h5>
+                  {{fa-icon "times" click=(action "onRemoveRating")}}
+                  {{ui/star-score isEditable=true averageRating=rating onRatingChange=(action "onRatingChange")}}
+                </div>
+              </div>
+              <hr />
+              <h5>
+                Cousine
+              </h5>
+              {{#multiselect-checkboxes
+                options=cuisines
+                onchange=(action "onUpdateCuisineList")
+                selection=cuisineList as |cuisine isSelected|
+              }}
+                <li>
+                  <label class="{{if isSelected "active"}}">
+                    {{input type="checkbox" checked=isSelected}}
+                    {{cuisine}}
+                  </label>
+                </li>
+              {{/multiselect-checkboxes}}
+            </div>
+          </div>
+        {{/if}}
+        {{#if isSortDropdownShown}}
+          <div class="restaurant-sort-dropdown">
+            <div class="filter-popup-arrow"></div>
+            <div class="filter-popup-content">
+              <div class="sort-by-control">
+                {{#radio-button value="name" groupValue=sortBy}}
+                  Name
+                {{/radio-button}}
+                {{#radio-button value="price" groupValue=sortBy}}
+                  Price
+                {{/radio-button}}
+                {{#radio-button value="rating" groupValue=sortBy}}
+                  Rating
+                {{/radio-button}}
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      </form>
+    </div>
+  </div>
+  <div class="row currentFilterBubbleRow">
+    <div class="col-xs-12">
+      {{#if name}}
+        <div class="currentFilterBubble">
+          <span>
+            Name:
+          </span>
+          {{name}}
+          <span {{action "onRemoveName"}}>
+            {{fa-icon "times-circle"}}
+          </span>
+        </div>
+      {{/if}}
+      {{#if price}}
+        <div class="currentFilterBubble">
+          <span>
+            Price:
+          </span>
+          {{price}}
+          <span {{action "onRemovePrice"}}>
+            {{fa-icon "times-circle"}}
+          </span>
+        </div>
+      {{/if}}
+      {{#if rating}}
+        <div class="currentFilterBubble">
+          <span>
+            Rating:
+          </span>
+          {{rating}}
+          <span {{action "onRemoveRating"}}>
+            {{fa-icon "times-circle"}}
+          </span>
+        </div>
+      {{/if}}
+      {{#if cuisine}}
+        <div class="currentFilterBubble">
+          <span>
+            Cuisine:
+          </span>
+          {{cuisine}}
+          <span {{action "onRemoveCuisine"}}>
+            {{fa-icon "times-circle"}}
+          </span>
+        </div>
+      {{/if}}
+      {{#if city}}
+        <div class="currentFilterBubble">
+          <span>
+            City:
+          </span>
+          {{find-city-by-id model.popularLocations city}}
+          <span {{action "removeCityFilter"}}>
+            {{fa-icon "times-circle"}}
+          </span>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

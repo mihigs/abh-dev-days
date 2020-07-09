@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-3">
+    <span>
+      Restaurant
+    </span>
+    <span>
+      {{reservation.restaurant.name}}
+    </span>
+  </div>
+  <div class="col-xs-12 col-sm-5">
+    <span>
+      Reserved For
+    </span>
+    <span>
+      {{datetime-format reservation.reservedOn "dddd, MMM D, YYYY hh:mm A"}}
+    </span>
+  </div>
+  <div class="col-xs-12 col-sm-4">
+    <span>
+      Max number of Guests
+    </span>
+    <span>
+      {{reservation.table.numberOfChairs}}
+    </span>
+  </div>
+</div>

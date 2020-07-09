@@ -1,0 +1,31 @@
+#
+# Application configuration
+#
+spring:
+  flyway:
+    locations:
+      "classpath:database/migrations"
+
+  jpa:
+    database-platform: "org.hibernate.dialect.PostgreSQL9Dialect"
+    open-in-view: false
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+
+  session:
+    store-type: "jdbc"
+    jdbc.initialize-schema: "always"
+
+  # Disable default resource mapping; Disable templates
+  resources.add-mappings: false
+  thymeleaf:
+    enabled: false
+    checkTemplateLocation: false
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/abhrestaurants?currentSchema=restaurants}
+    username: postgres
+    password: admin
+
+server:
+  port: ${PORT:8080}

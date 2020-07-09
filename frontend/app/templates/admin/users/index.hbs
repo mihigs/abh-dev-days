@@ -1,0 +1,29 @@
+<div class="admin-form">
+  <h1 class="admin-from-title">
+    All Users
+  </h1>
+  {{#link-to "admin.users.new" class="admin-from-new-button"}}
+    Add new User
+  {{/link-to}}
+  <ul class="admin-form-object-list">
+    {{#each model.content as |user|}}
+      <li class="admin-form-object-list-item">
+        <h3>
+          {{user.firstName}}
+          {{user.lastName}}
+        </h3>
+        {{#link-to "admin.users.delete" user.id class="list-item-button"}}
+          Delete
+        {{/link-to}}
+        {{#link-to "admin.users.edit" user.id class="list-item-button"}}
+          Edit
+        {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+  {{navigation/pagination
+    currentPage=model.pageable.pageNumber
+    maxPages=model.totalPages
+    smallMargins=true
+  }}
+</div>

@@ -1,0 +1,264 @@
+<div id="wrap">
+  {{navigation/page-navigation
+    type="restaurant"
+    coverImage=model.restaurant.coverImagePath
+  }}
+  <div id="main">
+    <div class="container overlapping-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <div class="restaurant-profile-picture">
+            <img src="{{model.restaurant.profileImagePath}}" alt="" />
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <h1 class="restaurant-name">
+            {{model.restaurant.name}}
+          </h1>
+          <p class="restaurant-tile-rating">
+            {{ui/star-score
+              averageRating=model.restaurant.averageRating
+              class="restaurant-tile-stars-light"
+            }}
+            <span
+              class="restaurant-tile-ratecount restaurant-tile-ratecount-light"
+            >
+              (
+              {{model.restaurant.numberOfRatings}}
+              )
+            </span>
+            {{ui/price-range
+              priceRange=model.restaurant.priceRange
+              class="restaurant-tile-pricernage restaurant-tile-pricernage-light"
+            }}
+            <span
+              class="restaurant-tile-foodtypes restaurant-tile-foodtypes-light space-out-left"
+            >
+              {{#each model.restaurant.cuisines as |cuisine|}}
+                <span>
+                  {{cuisine.name}}
+                </span>
+              {{/each}}
+            </span>
+            <span
+              class="restaurant-tile-foodtypes restaurant-tile-foodtypes-light"
+            >
+              {{openTime}}
+              -
+              {{closeTime}}
+            </span>
+          </p>
+          {{#if currentUser}}
+            <button
+              class="restaurant-rate-this-button"
+              type="button"
+              data-toggle="modal"
+              data-target="#submitRatingModal"
+              {{action "onShowRatingDialog"}}
+            >
+              {{fa-icon "star"}}
+              Rate this place
+            </button>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3">
+          <ul class="restaurant-navigation">
+            <li>
+              <a id="reservation" href="#reservation">
+                Reservation
+              </a>
+            </li>
+            <li>
+              <a id="about" href="#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a id="menu" href="#menu">
+                Menu
+              </a>
+            </li>
+            <li>
+              <a id="photos" href="#photos">
+                Photos
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-12 col-sm-9 move-up-compensate-for-overlay">
+          <div id="reservation" class="restaurant-card">
+            <h2 class="restaurant-card-title">
+              Make a Free Reservation
+            </h2>
+            <form class="reservation-form" {{action "onFindTable" on="submit"}}>
+              {{misc/people-selection onChange=(action "onPeopleSelection")}}
+              {{input type="date" value=date required="required" min=today}}
+              {{input
+                type="time"
+                value=time
+                required="required"
+                min=openTime
+                max=closeTime
+              }}
+              <button type="submit" class="reservation-form-button">
+                Find Table
+              </button>
+            </form>
+            {{#if inquiryResponse}}
+              <h3 class="restaurant-reservation-availability">
+                Availability on
+                {{date-format inquiryResponse.inquiry.date}}
+                around
+                {{time-format inquiryResponse.inquiry.date}}
+                for
+                {{inquiryResponse.inquiry.numberOfPeople}}
+                People:
+              </h3>
+              <p class="restaurant-reservation-info">
+                <span>
+                  {{#if inquiryResponse.numberOfTablesLeft}}
+                    {{fa-icon "check-circle"}}
+                  {{else}}
+                    {{fa-icon "times-circle"}}
+                  {{/if}}
+                  Number of Tables Left:
+                  {{inquiryResponse.numberOfTablesLeft}}
+                </span>
+                <span>
+                  {{fa-icon "info-circle"}}
+                  Reservations Today:
+                  {{inquiryResponse.numberOfReservationsToday}}
+                </span>
+              </p>
+              {{#unless (eq inquiryResponse.numberOfTablesLeft 0)}}
+                <h5 class="restaurant-reservation-times-title">
+                  Select the best time that fits you:
+                </h5>
+                <p class="restaurant-reservation-times">
+                  {{#each inquiryResponse.timeSuggestions as |suggestion|}}
+                    <span {{action "onReserve" suggestion}}>
+                      {{time-format suggestion}}
+                    </span>
+                  {{/each}}
+                </p>
+              {{/unless}}
+            {{/if}}
+          </div>
+          <div id="about" class="restaurant-card">
+            <h2 class="restaurant-card-title">
+              About
+              {{model.restaurant.name}}
+            </h2>
+            <h5 class="restaurant-card-subtitle">
+              Description
+            </h5>
+            <p class="restaurant-card-bodytext">
+              {{model.restaurant.description}}
+            </p>
+          </div>
+          <div id="menu" class="restaurant-card">
+            <h2 class="restaurant-card-title floating">
+              Menu:
+            </h2>
+            {{#ui/tab-pane
+              items=tabPaneItems
+              activeItem="BREAKFAST" as |activeItem|
+            }}
+              {{#ui/tab-pane-content id="BREAKFAST" activeItem=activeItem}}
+                {{restaurant/menu-list items=breakfastMenu}}
+              {{/ui/tab-pane-content}}
+              {{#ui/tab-pane-content id="LUNCH" activeItem=activeItem}}
+                {{restaurant/menu-list items=lunchMenu}}
+              {{/ui/tab-pane-content}}
+              {{#ui/tab-pane-content id="DINNER" activeItem=activeItem}}
+                {{restaurant/menu-list items=dinnerMenu}}
+              {{/ui/tab-pane-content}}
+            {{/ui/tab-pane}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="submitRatingModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="ratingModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <h4 class="modal-title" id="ratingModalLabel">
+        Rate this place
+      </h4>
+      <button
+        type="button"
+        class="close close-modal-button"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">
+          ×
+        </span>
+      </button>
+      <form>
+        <div class="rating-control" id="rating-control">
+          {{#radio-button
+            value=1
+            groupValue=review_score
+            changed="ratingChanged"
+          }}
+            {{fa-icon "star"}}
+          {{/radio-button}}
+          {{#radio-button
+            value=2
+            groupValue=review_score
+            changed="ratingChanged"
+          }}
+            {{fa-icon "star"}}
+          {{/radio-button}}
+          {{#radio-button
+            value=3
+            groupValue=review_score
+            changed="ratingChanged"
+          }}
+            {{fa-icon "star"}}
+          {{/radio-button}}
+          {{#radio-button
+            value=4
+            groupValue=review_score
+            changed="ratingChanged"
+          }}
+            {{fa-icon "star"}}
+          {{/radio-button}}
+          {{#radio-button
+            value=5
+            groupValue=review_score
+            changed="ratingChanged"
+          }}
+            {{fa-icon "star"}}
+          {{/radio-button}}
+        </div>
+        {{textarea
+          class="review-textarea"
+          type="text"
+          placeholder="Write a Review"
+          value=review_text
+          required="required"
+        }}
+        <button class="submit-review-button" {{action "submitReviewAction"}}>
+          Save
+        </button>
+        {{#if model.hasError}}
+          <p class="error-message">
+            {{model.errorMessage}}
+          </p>
+        {{/if}}
+      </form>
+    </div>
+  </div>
+</div>

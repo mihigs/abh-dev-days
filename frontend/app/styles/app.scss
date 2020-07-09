@@ -1,0 +1,64 @@
+@import "./bootstrap/bootstrap";
+
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600";
+
+* {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+html,
+body,
+body > .ember-view {
+  height: 100%;
+}
+
+#wrap {
+  background-color: #f9f9f9;
+  min-height: 100%;
+}
+
+.white-wrapeer {
+  background-color: #fff !important;
+}
+
+#main {
+  /*overflow: auto;*/
+  padding-bottom: 230px;
+}
+
+@import "./components/navigation/page-navigation";
+@import "./components/navigation/pagination";
+@import "./components/footer/page-footer";
+@import "./components/restaurants/filters";
+@import "./components/restaurants/restaurant-tile";
+@import "./components/home-popular-locations";
+
+@import "./index";
+@import "./login";
+@import "./restaurant";
+@import "./user";
+@import "./reservation-details";
+@import "./bad-request.scss";
+
+.form-button-extra-small {
+  font-size: 14px;
+  padding: 3px 15px;
+  height: 40px;
+  width: auto;
+  margin-left: 14px;
+}
+
+
+.multiselect-checkboxes li label.active {
+  color: #fd6f60 !important;
+}
+
+.map-canvas {
+  height: 360px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.small-map .map-canvas {
+  height: 180px;
+}

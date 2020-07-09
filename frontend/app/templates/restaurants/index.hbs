@@ -1,0 +1,26 @@
+<div id="wrap">
+  {{navigation/page-navigation}}
+  <div id="main">
+    <div class="container">
+      {{restaurants/filters
+        name=name
+        sortBy=sortBy
+        cuisine=cuisine
+        price=price
+        rating=rating
+      }}
+      <div class="row">
+        {{#each model.content as |restaurant|}}
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            {{restaurants/restaurant-tile data=restaurant buttonStyle="white"}}
+          </div>
+        {{/each}}
+      </div>
+      {{navigation/pagination
+        currentPage=model.pageable.pageNumber
+        maxPages=model.totalPages
+      }}
+    </div>
+    {{home-popular-locations}}
+  </div>
+</div>
