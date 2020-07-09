@@ -26,6 +26,13 @@
         >
           Filter by
           {{fa-icon "chevron-down"}}
+        </button> 
+        <button
+          type="button"
+          class="restaurant-search-button"
+          {{action "onShowFiltersDropdown"}}
+        > 
+          Search
         </button>
         {{#if isFiltersDropdownShown}}
           <div class="restaurant-filters-dropdown">

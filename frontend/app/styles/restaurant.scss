@@ -300,7 +300,6 @@
 .rating-control .checked i {
   color: #fd6f60;
 }
-
 .submit-review-button {
   width: 100%;
   display: block;
@@ -320,3 +319,8 @@
     cursor: pointer;
   }
 }
+
+.ember-google-map{
+  width: 100%;
+  height: 355px;
+} 
