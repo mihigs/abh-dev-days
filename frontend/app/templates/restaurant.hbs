@@ -20,9 +20,7 @@
               averageRating=model.restaurant.averageRating
               class="restaurant-tile-stars-light"
             }}
-            <span
-              class="restaurant-tile-ratecount restaurant-tile-ratecount-light"
-            >
+            <span class="restaurant-tile-ratecount restaurant-tile-ratecount-light">
               (
               {{model.restaurant.numberOfRatings}}
               )
@@ -31,34 +29,25 @@
               priceRange=model.restaurant.priceRange
               class="restaurant-tile-pricernage restaurant-tile-pricernage-light"
             }}
-            <span
-              class="restaurant-tile-foodtypes restaurant-tile-foodtypes-light space-out-left"
-            >
+            <span class="restaurant-tile-foodtypes restaurant-tile-foodtypes-light space-out-left">
               {{#each model.restaurant.cuisines as |cuisine|}}
-                <span>
-                  {{cuisine.name}}
-                </span>
+              <span>
+                {{cuisine.name}}
+              </span>
               {{/each}}
             </span>
-            <span
-              class="restaurant-tile-foodtypes restaurant-tile-foodtypes-light"
-            >
+            <span class="restaurant-tile-foodtypes restaurant-tile-foodtypes-light">
               {{openTime}}
               -
               {{closeTime}}
             </span>
           </p>
           {{#if currentUser}}
-            <button
-              class="restaurant-rate-this-button"
-              type="button"
-              data-toggle="modal"
-              data-target="#submitRatingModal"
-              {{action "onShowRatingDialog"}}
-            >
-              {{fa-icon "star"}}
-              Rate this place
-            </button>
+          <button class="restaurant-rate-this-button" type="button" data-toggle="modal" data-target="#submitRatingModal"
+            {{action "onShowRatingDialog"}}>
+            {{fa-icon "star"}}
+            Rate this place
+          </button>
           {{/if}}
         </div>
       </div>
@@ -107,43 +96,43 @@
               </button>
             </form>
             {{#if inquiryResponse}}
-              <h3 class="restaurant-reservation-availability">
-                Availability on
-                {{date-format inquiryResponse.inquiry.date}}
-                around
-                {{time-format inquiryResponse.inquiry.date}}
-                for
-                {{inquiryResponse.inquiry.numberOfPeople}}
-                People:
-              </h3>
-              <p class="restaurant-reservation-info">
-                <span>
-                  {{#if inquiryResponse.numberOfTablesLeft}}
-                    {{fa-icon "check-circle"}}
-                  {{else}}
-                    {{fa-icon "times-circle"}}
-                  {{/if}}
-                  Number of Tables Left:
-                  {{inquiryResponse.numberOfTablesLeft}}
-                </span>
-                <span>
-                  {{fa-icon "info-circle"}}
-                  Reservations Today:
-                  {{inquiryResponse.numberOfReservationsToday}}
-                </span>
-              </p>
-              {{#unless (eq inquiryResponse.numberOfTablesLeft 0)}}
-                <h5 class="restaurant-reservation-times-title">
-                  Select the best time that fits you:
-                </h5>
-                <p class="restaurant-reservation-times">
-                  {{#each inquiryResponse.timeSuggestions as |suggestion|}}
-                    <span {{action "onReserve" suggestion}}>
-                      {{time-format suggestion}}
-                    </span>
-                  {{/each}}
-                </p>
-              {{/unless}}
+            <h3 class="restaurant-reservation-availability">
+              Availability on
+              {{date-format inquiryResponse.inquiry.date}}
+              around
+              {{time-format inquiryResponse.inquiry.date}}
+              for
+              {{inquiryResponse.inquiry.numberOfPeople}}
+              People:
+            </h3>
+            <p class="restaurant-reservation-info">
+              <span>
+                {{#if inquiryResponse.numberOfTablesLeft}}
+                {{fa-icon "check-circle"}}
+                {{else}}
+                {{fa-icon "times-circle"}}
+                {{/if}}
+                Number of Tables Left:
+                {{inquiryResponse.numberOfTablesLeft}}
+              </span>
+              <span>
+                {{fa-icon "info-circle"}}
+                Reservations Today:
+                {{inquiryResponse.numberOfReservationsToday}}
+              </span>
+            </p>
+            {{#unless (eq inquiryResponse.numberOfTablesLeft 0)}}
+            <h5 class="restaurant-reservation-times-title">
+              Select the best time that fits you:
+            </h5>
+            <p class="restaurant-reservation-times">
+              {{#each inquiryResponse.timeSuggestions as |suggestion|}}
+              <span {{action "onReserve" suggestion}}>
+                {{time-format suggestion}}
+              </span>
+              {{/each}}
+            </p>
+            {{/unless}}
             {{/if}}
           </div>
           <div id="about" class="restaurant-card">
@@ -151,6 +140,20 @@
               About
               {{model.restaurant.name}}
             </h2>
+            {{!-- ovde html stavci --}}
+            {{!-- <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11607.181020513624!2d17.8228462!3d43.339473299999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134b4306724102e7%3A0xce805f6147eed7a!2sHerzegovina%20Museum!5e0!3m2!1sen!2sba!4v1594330679591!5m2!1sen!2sba"
+              width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+              tabindex="0">
+              </iframe> --}}
+              <div>
+                {{#g-map lat='51.508530' lng='-0.076132' width="500px" height="500px" zoom=10 as |g|}}
+                  {{#each locations as |l|}}
+                    {{g.marker lat=l.lat lng=model.restaurant.longitude onClick=(action 'showDetails' l)}}
+                  {{/each}}
+                {{/g-map}}
+              </div>
+              <span>{{model.restaurant.longitude}}</span>
             <h5 class="restaurant-card-subtitle">
               Description
             </h5>
@@ -166,15 +169,15 @@
               items=tabPaneItems
               activeItem="BREAKFAST" as |activeItem|
             }}
-              {{#ui/tab-pane-content id="BREAKFAST" activeItem=activeItem}}
-                {{restaurant/menu-list items=breakfastMenu}}
-              {{/ui/tab-pane-content}}
-              {{#ui/tab-pane-content id="LUNCH" activeItem=activeItem}}
-                {{restaurant/menu-list items=lunchMenu}}
-              {{/ui/tab-pane-content}}
-              {{#ui/tab-pane-content id="DINNER" activeItem=activeItem}}
-                {{restaurant/menu-list items=dinnerMenu}}
-              {{/ui/tab-pane-content}}
+            {{#ui/tab-pane-content id="BREAKFAST" activeItem=activeItem}}
+            {{restaurant/menu-list items=breakfastMenu}}
+            {{/ui/tab-pane-content}}
+            {{#ui/tab-pane-content id="LUNCH" activeItem=activeItem}}
+            {{restaurant/menu-list items=lunchMenu}}
+            {{/ui/tab-pane-content}}
+            {{#ui/tab-pane-content id="DINNER" activeItem=activeItem}}
+            {{restaurant/menu-list items=dinnerMenu}}
+            {{/ui/tab-pane-content}}
             {{/ui/tab-pane}}
           </div>
         </div>
@@ -183,24 +186,13 @@
   </div>
 </div>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="submitRatingModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="ratingModalLabel"
->
+<div class="modal fade" id="submitRatingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <h4 class="modal-title" id="ratingModalLabel">
         Rate this place
       </h4>
-      <button
-        type="button"
-        class="close close-modal-button"
-        data-dismiss="modal"
-        aria-label="Close"
-      >
+      <button type="button" class="close close-modal-button" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">
           ×
         </span>
@@ -212,35 +204,35 @@
             groupValue=review_score
             changed="ratingChanged"
           }}
-            {{fa-icon "star"}}
+          {{fa-icon "star"}}
           {{/radio-button}}
           {{#radio-button
             value=2
             groupValue=review_score
             changed="ratingChanged"
           }}
-            {{fa-icon "star"}}
+          {{fa-icon "star"}}
           {{/radio-button}}
           {{#radio-button
             value=3
             groupValue=review_score
             changed="ratingChanged"
           }}
-            {{fa-icon "star"}}
+          {{fa-icon "star"}}
           {{/radio-button}}
           {{#radio-button
             value=4
             groupValue=review_score
             changed="ratingChanged"
           }}
-            {{fa-icon "star"}}
+          {{fa-icon "star"}}
           {{/radio-button}}
           {{#radio-button
             value=5
             groupValue=review_score
             changed="ratingChanged"
           }}
-            {{fa-icon "star"}}
+          {{fa-icon "star"}}
           {{/radio-button}}
         </div>
         {{textarea
@@ -254,9 +246,9 @@
           Save
         </button>
         {{#if model.hasError}}
-          <p class="error-message">
-            {{model.errorMessage}}
-          </p>
+        <p class="error-message">
+          {{model.errorMessage}}
+        </p>
         {{/if}}
       </form>
     </div>

@@ -183,33 +183,33 @@ export default Controller.extend({
         );
       }
 
-      // if (
-      //   this.get("marker").getPosition() === this.get("defaultMerkerPosition")
-      // ) {
-      //   return alert("Please Move the Map Marker to the correct position");
-      // }
+      if (
+        this.get("marker").getPosition() === this.get("defaultMerkerPosition")
+      ) {
+        return alert("Please Move the Map Marker to the correct position");
+      }
 
-      // let markerLatLng = new google.maps.LatLng(
-      //   this.get("model.restaurant.latitude"),
-      //   this.get("model.restaurant.longitude")
-      // );
-      // if (
-      //   !google.maps.geometry.poly.containsLocation(
-      //     markerLatLng,
-      //     this.get("polygon")
-      //   )
-      // ) {
-      //   return alert(
-      //     "Marker out of Bounds. Please position the marker within the selected City."
-      //   );
-      // }
+      let markerLatLng = new google.maps.LatLng(
+        this.get("model.restaurant.latitude"),
+        this.get("model.restaurant.longitude")
+      );
+      if (
+        !google.maps.geometry.poly.containsLocation(
+          markerLatLng,
+          this.get("polygon")
+        )
+      ) {
+        return alert(
+          "Marker out of Bounds. Please position the marker within the selected City."
+        );
+      }
 
-      // if (
-      //   this.get("uploadProgressProfile") !== null ||
-      //   this.get("uploadProgressCover") !== null
-      // ) {
-      //   return alert("Please wait for upload to finish");
-      // }
+      if (
+        this.get("uploadProgressProfile") !== null ||
+        this.get("uploadProgressCover") !== null
+      ) {
+        return alert("Please wait for upload to finish");
+      }
 
       if (!this.get("model.restaurant.priceRange")) {
         return alert("Please select a correct price range.");
@@ -247,12 +247,12 @@ export default Controller.extend({
           .then(() => this.transitionToRoute("admin.restaurants"));
       }
     }
-  }
+  },
 
   // actions: {
 
-  //   repositionRestaurantMarker(newLat, newLong) {
-  //     this.set("model.restaurant.latitude", newLat);
-  //     this.set("model.restaurant.longitude", newLong);
-  //   },
+    repositionRestaurantMarker(newLat, newLong) {
+      this.set("model.restaurant.latitude", newLat);
+      this.set("model.restaurant.longitude", newLong);
+    },
 });

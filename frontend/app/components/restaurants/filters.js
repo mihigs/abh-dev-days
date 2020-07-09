@@ -41,6 +41,11 @@ export default Component.extend({
   }),
 
   actions: {
+
+    // onShowSearchButton(){
+    //   this.set()
+    // },
+
     onShowSortDropdown() {
       this.set("isFiltersDropdownShown", false);
       this.toggleProperty("isSortDropdownShown");

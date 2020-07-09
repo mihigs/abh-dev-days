@@ -12,7 +12,21 @@
   width: -moz-calc(100% - 327px) !important;
   width: -o-calc(100% - 327px) !important;
   width: -ms-calc(100% - 327px) !important;
-  width: calc(100% - 327px) !important;
+  width: calc(100% - 450px) !important;
+}
+
+.restaurant-search-button{
+  background-color: #FD6F60;
+  border: none;
+  outline: none;
+  height: 56px;
+  margin: 0;
+  padding: 0 25px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+  float: right;
+  border-radius: 1px;
 }
 
 .show-popup-button {
@@ -41,7 +55,7 @@
   z-index: 50;
   height: 0px;
   width: 328px;
-  right: 0px;
+  right: 10%;
   top: 50px;
 
   .filter-popup-arrow {
@@ -55,7 +69,7 @@
   z-index: 50;
   height: 0px;
   width: 200px;
-  right: 115px;
+  right: 17%;
   top: 50px;
 }
 
