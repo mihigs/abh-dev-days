@@ -11,9 +11,11 @@
       }}
       <div class="row">
         {{#each model.content as |restaurant|}}
-          <div class="col-xs-12 col-sm-6 col-md-4">
-            {{restaurants/restaurant-tile data=restaurant buttonStyle="white"}}
-          </div>
+          {{#if (filterRestaurant restaurant name sortBy cuisine price rating)}}
+            <div class="col-xs-12 col-sm-6 col-md-4">
+              {{restaurants/restaurant-tile data=restaurant buttonStyle="white"}}
+            </div>
+          {{/if}}
         {{/each}}
       </div>
       {{navigation/pagination
