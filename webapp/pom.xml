@@ -25,7 +25,7 @@
     <thymeleaf-spring5.version>3.0.11.RELEASE</thymeleaf-spring5.version>
     <flyway.version>5.0.7</flyway.version>
     <hikaricp.version>3.1.0</hikaricp.version>
-    <jackson.version>2.9.5</jackson.version>
+    <jackson.version>2.13.4.1</jackson.version>
     <slf4j.version>1.7.25</slf4j.version>
     <commons.lang.version>3.7</commons.lang.version>
     <commonsio.version>2.6</commonsio.version>
